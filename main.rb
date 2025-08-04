@@ -22,4 +22,15 @@ while True:
 これでpicoRubyをWi-Fiに繋げることができる#https://picoruby.github.io/wifi#supported-oses-and-browsers
 シェルはコマンドが打てる場所
 いろいろ書いてあるよ#https://picoruby.github.io/Net_HTTPClient.html
+インターネットつなぐコード
+CYW43.init("JP")
+=> 0
+irb>
+irb> CYW43.enable_sta_mode()
+=> true
+irb> ssid = "ibaraki"
+=> "ibaraki"
+irb> CYW43.connect_timeout( "ibaraki",  "ibarakiken", 0x00400004)
+=> CYW43_arch_wifi_connect_timeout_ms() failed (CYW43::ConnectTimeout)
+irb> CYW43.connect_timeout( "ibaraki",  "ibarakiken", 0x00400004)
 """
