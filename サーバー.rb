@@ -13,3 +13,11 @@ def view_articles_route():
   return str(random_int)
 
 app.run(host='0.0.0.0',port=8080)
+
+"""
+pythonでシステムシェルを開く
+#ツール⇒システムシェルを開く
+Flaskのインストール
+#Flaskインストールコマンド：pip install Flask
+
+"""
