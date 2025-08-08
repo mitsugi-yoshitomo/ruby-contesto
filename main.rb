@@ -35,6 +35,7 @@ while True:
         time.sleep(0.5)
     while sp == dt
         a.duty(sp)
+    end
 
 """
 これでpicoRubyをWi-Fiに繋げることができる#https://picoruby.github.io/wifi#supported-oses-and-browsers
