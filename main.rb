@@ -1,3 +1,4 @@
+#irb
 require"pwm"
 require"net"
 CYW43.init("JP")
@@ -12,16 +13,18 @@ a = PWM.new(16)
 sp=0
 a.frequency(5)
 while True:
-    host = "10.40.251.45"
+    host = "10.40.251.51"
     path = "/"
     req =  "GET #{path} HTTP/1.1\r\n"
     req += "Host: #{host}\r\n"
     req += "Connection: close\r\n"
     req += "\r\n"
-    data = Net::HTTPUtil.format_response(TCPClient.request(host, 8080, req, false))
+    #data = Net::TCPClient.request(host, 8080,req,false)
+    data = Net::HTTPUtil.format_response(Net::TCPClient.request(host, 8080, req, false))
     #上のコードがし少し違う
-    puts data
-    dt=requests.get(random_int)#シガワが送ってきた値
+    
+    dt=(data[:body]).to_i#シガワが送ってきた値
+    
     while sp < dt
         sp=sp+1
         a.duty(sp)
