@@ -1,19 +1,22 @@
 #irb
 require"pwm"
 require"net"
+ssid =  "auhikari-mintzz"            #"ibaraki"
+psfrees = "ajzf2yhndmyet"            #"ibarakiken"
+wpa2 = 0x00400004
 CYW43.init("JP")
 CYW43.enable_sta_mode()
-CYW43.connect_timeout( "ibaraki",  "ibarakiken", 0x00400004)
-CYW43.connect_timeout( "ibaraki",  "ibarakiken", 0x00400004)
-ssid = "ibaraki"
+CYW43.connect_timeout( ssid,  psfrees, wpa2)
+CYW43.connect_timeout( ssid,  psfrees, wpa2)
+puts("OK")
 import requests
 import time
-url="http://127.0.0.1:8080"
+url="http://192.168.0.14:8080"
 a = PWM.new(16)
 sp=0
 a.frequency(5)
-while True:
-    host = "10.40.251.51"
+while true do
+    host = "192.168.0.14"
     path = "/"
     req =  "GET #{path} HTTP/1.1\r\n"
     req += "Host: #{host}\r\n"
@@ -24,20 +27,24 @@ while True:
     #上のコードがし少し違う
     
     dt=(data[:body]).to_i#シガワが送ってきた値
+    puts(data[:body]).to_i
     
-    while sp < dt
+    if sp < dt
         sp=sp+1
         a.duty(sp)
         time.sleep(0.5)
-    while sp > dt
+    end
+    if sp > dt
         sp=sp-1
         a.duty(sp)
         time.sleep(0.5)
-    while sp == dt
+    end
+    if sp == dt
         a.duty(sp)
     end
-
-"""
+    puts(dt)
+end
+=begin
 これでpicoRubyをWi-Fiに繋げることができる#https://picoruby.github.io/wifi#supported-oses-and-browsers
 シェルはコマンドが打てる場所
 いろいろ書いてあるよ#https://picoruby.github.io/Net_HTTPClient.html
@@ -59,4 +66,4 @@ Net::HTTPClient.new("abehiroshi.la.coocan.jp:80")#
 
 URLメモ http://abehiroshi.la.coocan.jp/
                ^     ホスト名        ^^パス^
-"""
+=end
