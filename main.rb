@@ -9,12 +9,11 @@ CYW43.enable_sta_mode()
 CYW43.connect_timeout( ssid,  psfrees, wpa2)
 CYW43.connect_timeout( ssid,  psfrees, wpa2)
 puts("OK")
-import requests
-import time
 url="http://192.168.0.14:8080"
 a = PWM.new(16)
 sp=0
 a.frequency(5)
+puts("OK")
 while true do
     host = "192.168.0.14"
     path = "/"
@@ -24,24 +23,28 @@ while true do
     req += "\r\n"
     #data = Net::TCPClient.request(host, 8080,req,false)
     data = Net::HTTPUtil.format_response(Net::TCPClient.request(host, 8080, req, false))
+    puts("OK")
     #上のコードがし少し違う
     
     dt=(data[:body]).to_i#シガワが送ってきた値
-    puts(data[:body]).to_i
+    puts(dt)
     
     if sp < dt
         sp=sp+1
         a.duty(sp)
-        time.sleep(0.5)
+        Machine.delay_ms(100)
     end
+    puts("OK")
     if sp > dt
         sp=sp-1
         a.duty(sp)
-        time.sleep(0.5)
+        Machine.delay_ms(100)
     end
+    puts("OK")
     if sp == dt
         a.duty(sp)
     end
+    puts("OK")
     puts(dt)
 end
 =begin
