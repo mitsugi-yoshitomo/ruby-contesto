@@ -1,6 +1,7 @@
 # モジュール
 import random
 import flask
+import time
 
 app = flask.Flask(__name__)
 
@@ -8,9 +9,11 @@ app = flask.Flask(__name__)
 @app.route('/', methods=['GET'])
 def view_articles_route():
   # メッセージを入れる
-  random_int = random.randint(1,100)
+  time_int = int(time.time())%100
   # 記事一覧のページを表示する
-  return str(random_int)
+  #time.sleep(3)
+  return str(time_int)
+
 
 app.run(host='0.0.0.0',port=8080)
 

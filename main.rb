@@ -4,17 +4,17 @@ require"net"
 ssid =  "auhikari-mintzz"            #"ibaraki"
 psfrees = "ajzf2yhndmyet"            #"ibarakiken"
 wpa2 = 0x00400004
+puts("通信始め")
 CYW43.init("JP")
 CYW43.enable_sta_mode()
 CYW43.connect_timeout( ssid,  psfrees, wpa2)
 CYW43.connect_timeout( ssid,  psfrees, wpa2)
-puts("OK")
 url="http://192.168.0.14:8080"
 a = PWM.new(16)
 sp=0
-a.frequency(5)
-puts("OK")
+a.frequency(100)
 while true do
+    puts("データ取ってる")
     host = "192.168.0.14"
     path = "/"
     req =  "GET #{path} HTTP/1.1\r\n"
@@ -23,29 +23,26 @@ while true do
     req += "\r\n"
     #data = Net::TCPClient.request(host, 8080,req,false)
     data = Net::HTTPUtil.format_response(Net::TCPClient.request(host, 8080, req, false))
-    puts("OK")
+    puts("データ取ったよ")
     #上のコードがし少し違う
     
     dt=(data[:body]).to_i#シガワが送ってきた値
     puts(dt)
     
     if sp < dt
-        sp=sp+1
+        puts("速度変えてるよプラス")
+        sp=sp+5
         a.duty(sp)
-        Machine.delay_ms(100)
-    end
-    puts("OK")
-    if sp > dt
-        sp=sp-1
+        Machine.busy_wait_ms(3000)
+    elsif sp > dt
+        puts("速度変えてるよマイナス")
+        sp=sp-5
         a.duty(sp)
-        Machine.delay_ms(100)
-    end
-    puts("OK")
-    if sp == dt
+        Machine.busy_wait_ms(3000)
+    elsif sp == dt
         a.duty(sp)
     end
-    puts("OK")
-    puts(dt)
+    puts(sp)
 end
 =begin
 これでpicoRubyをWi-Fiに繋げることができる#https://picoruby.github.io/wifi#supported-oses-and-browsers
