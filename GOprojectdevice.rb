@@ -10,22 +10,12 @@ CYW43.init("JP")
 CYW43.enable_sta_mode()
 CYW43.connect_timeout(ssid,  psfrees, wpa2)
 CYW43.connect_timeout(ssid,  psfrees, wpa2)
-url="http://10.40.247.96:8080"
 a = PWM.new(16)
 is_not_running = true
 speed=0
 dt=0
 a.frequency(100)
 s = Net::UDPServer.new(8080)
-
-puts("IPアドレス送ってる")
-host = "10.40.247.96"
-path = "/"
-req =  "GET #{path} HTTP/1.1\r\n"
-req += "Host: #{host}\r\n"
-req += "Connection: close\r\n"
-req += "\r\n"
-Net::HTTPUtil.format_response(Net::TCPClient.request("10.40.251.45", 8080, "GET / HTTP/1.1\r\n\r\n", false))
 
 while true do
     puts("データ取ってる")
