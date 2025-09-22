@@ -1,4 +1,9 @@
 require 'sdl2'
+require "socket"
+
+#ネット関係
+a=UDPSocket.new
+a.setsockopt(Socket::SOL_SOCKET, Socket::SO_BROADCAST, true)
 
 # SDL2の初期化
 SDL2.init(SDL2::INIT_VIDEO)
@@ -225,6 +230,8 @@ while running
     puts(speed, vvalue_of_flame*33)
     debugcount = 0
   end
+  a.send(speed.to_s,0,"10.40.255.255", 8080)
+  puts("ブルーアーカイブー")
 end
 
 # SDL2の終了処理
