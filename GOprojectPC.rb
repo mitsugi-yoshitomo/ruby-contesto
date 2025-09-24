@@ -5,6 +5,8 @@ require "socket"
 a=UDPSocket.new
 a.setsockopt(Socket::SOL_SOCKET, Socket::SO_BROADCAST, true)
 
+yaju = 0
+
 # SDL2の初期化
 SDL2.init(SDL2::INIT_VIDEO)
 
@@ -83,11 +85,13 @@ speed = 0.0 # フレーム当たり進むゲーム内距離
 distance = 0 # 現在のゲーム内距離
 vfream_per_distance = 50 # 動画1枚当たりゲーム内距離
 
+
 #加減速度ハッシュ
 A_HASH = {-5=>3, -4=>2.5, -3=>2, -2=>1.5, -1=>0.5, 0=>0, 1=>-1, 2=>-1.6, 3=>-2.4, 4=>-3, 5=>-3.5, 6=>-4, 7=>-4.5, 8=>-5, 9=>-5}
 
 train_isnt_runnning = true
 debugcount = 0
+count = 0
 
 while running
   distance = distance + speed.to_i #スピードが1ならdistanceも1増える
@@ -216,7 +220,7 @@ while running
   elsif train_isnt_runnning == false && notch < 0
     speed = speed + vvalue_of_flame
   elsif train_isnt_runnning == false && notch == 0
-
+    speed = speed + vvalue_of_flame / 4
   elsif train_isnt_runnning == false && notch > 0
     if speed > 0.0
       speed = speed + vvalue_of_flame
@@ -230,8 +234,13 @@ while running
     puts(speed, vvalue_of_flame*33)
     debugcount = 0
   end
-  a.send(speed.to_s,0,"10.40.255.255", 8080)
-  puts("ブルーアーカイブー")
+  count = count + 1
+  if count == 3
+    a.send(speed.to_s,0,"10.40.255.255", 8080)
+    count = 0
+  end  
+  #yaju = yaju + 1
+  #puts(yaju)
 end
 
 # SDL2の終了処理
