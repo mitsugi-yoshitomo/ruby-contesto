@@ -80,7 +80,7 @@ dest_rectON = SDL2::Rect.new(200, 400, 800, 500)
 running = true
 
 #距離変数
-gool_distance = 183500 # ゴールのゲーム内距離
+gool_distance = 183500 # ゴールのゲーム内距離（計3670枚）
 speed = 0.0 # フレーム当たり進むゲーム内距離
 distance = 0 # 現在のゲーム内距離
 vfream_per_distance = 50 # 動画1枚当たりゲーム内距離
@@ -94,8 +94,14 @@ debugcount = 0
 count = 0
 
 while running
-  distance = distance + speed.to_i #スピードが1ならdistanceも1増える
-  vframe = distance / vfream_per_distance#distanceが50になったら1フレーム進む
+  if 0<speed && speed<45
+    distance = distance + (speed.to_i*2) #スピードが1ならdistanceも1増える
+  elsif 45<=speed && speed<=60
+    distance = distance + (speed.to_i*114514)
+  elsif 60<speed
+    distance = distance + speed.to_i
+  end
+  vframe = distance.to_i / vfream_per_distance#distanceが50になったら1フレーム進む
   sleep 0.03
 
  
@@ -248,6 +254,7 @@ texture.destroy
 renderer.destroy
 window.destroy
 SDL2.quit
+
 
 
 
