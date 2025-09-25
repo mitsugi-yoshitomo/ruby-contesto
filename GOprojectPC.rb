@@ -83,6 +83,7 @@ running = true
 gool_distance = 183500 # ゴールのゲーム内距離（計3670枚）
 speed = 0.0 # フレーム当たり進むゲーム内距離
 distance = 0 # 現在のゲーム内距離
+vframe = 0
 vfream_per_distance = 50 # 動画1枚当たりゲーム内距離
 
 
@@ -94,13 +95,12 @@ debugcount = 0
 count = 0
 
 while running
-  if 0<speed && speed<45
-    distance = distance + (speed.to_i*2) #スピードが1ならdistanceも1増える
-  elsif 45<=speed && speed<=60
-    distance = distance + (speed.to_i*114514)
-  elsif 60<speed
-    distance = distance + speed.to_i
+  if vframe<2700 
+    distance = distance + speed.to_i*(-0.05*speed.to_i+4.25)
+  elsif speed<45
+    distance = distance + speed.to_i*(0.00125*(speed.to_i**2)-0.15*speed.to_i+5.375)
   end
+  
   vframe = distance.to_i / vfream_per_distance#distanceが50になったら1フレーム進む
   sleep 0.03
 
@@ -237,7 +237,7 @@ while running
 
   debugcount = debugcount + 1
   if debugcount == 33
-    puts(speed, vvalue_of_flame*33)
+    puts(speed, vvalue_of_flame*33, vframe)
     debugcount = 0
   end
   count = count + 1
