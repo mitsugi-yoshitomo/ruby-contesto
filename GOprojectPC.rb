@@ -1,6 +1,7 @@
 require 'sdl2'
 require "socket"
 
+
 #ネット関係
 a=UDPSocket.new
 a.setsockopt(Socket::SOL_SOCKET, Socket::SO_BROADCAST, true)
@@ -9,9 +10,13 @@ yaju = 0
 
 # SDL2の初期化
 SDL2.init(SDL2::INIT_VIDEO)
+SDL2::TTF.init
 
 #マスコンの　値ブレーキ　-１～-８・非常　アクセル　１～５
 notch = 0
+
+
+texturespeed = SDL2::TTF.open("Oswald-Medium.ttf",20,0)
 
 
 # ウィンドウを作成
@@ -95,9 +100,14 @@ debugcount = 0
 count = 0
 
 while running
-  if vframe<2700 
+  #スピードを表示
+  texturespeed = texturespeed.render_blended(speed.to_s,[0,255,0])
+  #texturespeed = renderer.create_texture_from(texturespeed)
+  #renderer.copy(texturespeed, nil, SDL2::Rect.new(900, 150, 500, 500))
+
+  if vframe<3000 || speed>45
     distance = distance + speed.to_i*(-0.05*speed.to_i+4.25)
-  elsif speed<45
+  else
     distance = distance + speed.to_i*(0.00125*(speed.to_i**2)-0.15*speed.to_i+5.375)
   end
   
