@@ -112,6 +112,7 @@ count = 0
 speed = 0
 distance = 0
 vframe = 0
+gool_distance = 183500 # ゴールのゲーム内距離（計3670枚）
 
 texture_movie = []
 
@@ -189,6 +190,12 @@ while running
   text1 = text.render_blended("km/h", [0, 255, 0])
   text1_ = renderer.create_texture_from(text1)
   renderer.copy(text1_, nil, SDL2::Rect.new(885, 785, 120, 75))
+
+  #残り距離を表示
+  gool_distancet1 = gool_distance - distance
+  text4 = text.render_blended((gool_distancet1.to_i / 100 - 150).to_s + "m", [0, 255, 0])
+  text4_ = renderer.create_texture_from(text4)
+  renderer.copy(text4_, nil, SDL2::Rect.new(1300, 385, 200, 150))
 
   text2 = text.render_blended((speed.to_i).to_s, [0, 255, 0])
   text2_ = renderer.create_texture_from(text2)
