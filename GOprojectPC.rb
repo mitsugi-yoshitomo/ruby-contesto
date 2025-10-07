@@ -193,7 +193,7 @@ while running
 
   #残り距離を表示
   gool_distancet1 = gool_distance - distance
-  text4 = text.render_blended((gool_distancet1.to_i / 100 - 150).to_s + "m", [0, 255, 0])
+  text4 = text.render_blended((gool_distancet1.to_i / 150 - 100).to_s + "m", [0, 255, 0])
   text4_ = renderer.create_texture_from(text4)
   renderer.copy(text4_, nil, SDL2::Rect.new(1300, 385, 200, 150))
 
